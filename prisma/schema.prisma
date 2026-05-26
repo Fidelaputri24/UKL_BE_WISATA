@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL") 
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Wisata {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  location    String
+  price       Int
+  image       String?
+
+  bookings    Booking[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Booking {
+  id             Int           @id @default(autoincrement())
+  customerName   String
+  customerEmail  String
+  customerPhone  String
+  wisataId       Int
+  totalTicket    Int
+  totalPrice     Int
+  visitDate      DateTime
+  paymentMethod  String?
+  paymentProof   String?
+  status         BookingStatus  @default(PENDING)
+  wisata         Wisata         @relation(fields: [wisataId],references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum BookingStatus {
+  PENDING
+  SUCCESS
+  CANCELLED
+}
