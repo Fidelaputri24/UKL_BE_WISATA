@@ -11,6 +11,7 @@ export class PrismaService
   implements OnModuleInit
 {
   async onModuleInit() {
+    console.log('RAW DB URL:', JSON.stringify(process.env.DATABASE_URL));
     await this.$connect();
   }
 }
