@@ -96,6 +96,12 @@ export class BookingController {
     );
   }
 
+  @UseGuards(
+    JwtAuthGuard,
+    RolesGuard,
+  )
+
+  @Roles('ADMIN')
   @Delete(':id')
   remove(
 
