@@ -1,6 +1,7 @@
 import {
   Injectable,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 
 import { PrismaService }
@@ -111,7 +112,7 @@ export class BookingService {
   }
 
   if (!booking.paymentProof) {
-    throw new NotFoundException(
+    throw new BadRequestException(
       'Bukti pembayaran belum diupload',
     );
   }
