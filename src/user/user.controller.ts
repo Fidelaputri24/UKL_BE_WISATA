@@ -43,11 +43,15 @@ export class UsersController {
     summary: 'Menampilkan detail user berdasarkan ID',
   })
   @Get(':id')
-  findOne(
-     @Param('id', ParseIntPipe) id: number,
-  ) {
-    return this.usersService.findOne(id);
-  }
+findOne(
+  @Param('id', ParseIntPipe) id: number,
+) {
+  return {
+    test: 'VERSI BARU',
+    id,
+  };
+}
+  
 
   @ApiOperation({
     summary: 'Mengubah data user',
@@ -69,4 +73,5 @@ export class UsersController {
   ) {
     return this.usersService.remove(id);
   }
+
 }
