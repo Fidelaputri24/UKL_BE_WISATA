@@ -72,12 +72,16 @@ create(
   body: any,
 ) {
 
+  console.log('===== CREATE =====');
+  console.log('FILE =', file);
+  console.log('BODY =', body);
+
   return this.wisataService.create({
     name: body.name,
     description: body.description,
     location: body.location,
     price: Number(body.price),
-    image: file.filename,
+    image: file?.filename,
   });
 }
 
@@ -142,18 +146,17 @@ update(
   body: any,
 ) {
 
+  console.log('===== UPDATE =====');
+  console.log('FILE =', file);
+  console.log('BODY =', body);
+
   return this.wisataService.update(
     id,
     {
-
       name: body.name,
-
       description: body.description,
-
       location: body.location,
-
       price: Number(body.price),
-
       image: file?.filename,
     },
   );
