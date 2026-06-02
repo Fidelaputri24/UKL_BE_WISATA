@@ -94,20 +94,35 @@ export class BookingService {
     });
   }
 
-  updateStatus(
-    id: number,
-    status: string,
-  ) {
+  async updateStatus(
+  id: number,
+  status: string,
+) {
 
-    return this.prisma.booking.update({
-
+  const booking =
+    await this.prisma.booking.findUnique({
       where: { id },
-
-      data: {
-        status: status as any,
-      },
     });
+
+  if (!booking) {
+    throw new NotFoundException(
+      'Booking tidak ditemukan',
+    );
   }
+
+  if (!booking.paymentProof) {
+    throw new NotFoundException(
+      'Bukti pembayaran belum diupload',
+    );
+  }
+
+  return this.prisma.booking.update({
+    where: { id },
+    data: {
+      status: status as any,
+    },
+  });
+}
 
   remove(id: number) {
 
@@ -144,4 +159,5 @@ uploadPayment(
     },
   });
 }
+  
 }
