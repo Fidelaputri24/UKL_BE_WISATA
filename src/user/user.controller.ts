@@ -7,12 +7,13 @@ import {
   Put,
   Post,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
+
 import { UsersService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('users')
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
 
@@ -20,6 +21,9 @@ export class UsersController {
     private readonly usersService: UsersService,
   ) {}
 
+  @ApiOperation({
+    summary: 'Membuat user baru',
+  })
   @Post()
   create(
     @Body() dto: CreateUserDto,
@@ -27,11 +31,17 @@ export class UsersController {
     return this.usersService.create(dto);
   }
 
+  @ApiOperation({
+    summary: 'Menampilkan semua user',
+  })
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
+  @ApiOperation({
+    summary: 'Menampilkan detail user berdasarkan ID',
+  })
   @Get(':id')
   findOne(
     @Param('id') id: number,
@@ -39,6 +49,9 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @ApiOperation({
+    summary: 'Mengubah data user',
+  })
   @Put(':id')
   update(
     @Param('id') id: number,
@@ -47,6 +60,9 @@ export class UsersController {
     return this.usersService.update(id, dto);
   }
 
+  @ApiOperation({
+    summary: 'Menghapus user',
+  })
   @Delete(':id')
   remove(
     @Param('id') id: number,

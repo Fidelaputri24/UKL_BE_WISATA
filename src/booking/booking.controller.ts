@@ -19,7 +19,12 @@ import { Roles }from '../auth/decorators/roles.decorators';
 import { FileInterceptor }from '@nestjs/platform-express';
 import { diskStorage }from 'multer';
 import { extname }from 'path';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiConsumes,
+  ApiBody,
+} from '@nestjs/swagger';
 
 @ApiTags('Booking')
 @Controller('booking')
@@ -30,6 +35,9 @@ export class BookingController {
     BookingService,
   ) {}
 
+  @ApiOperation({
+    summary: 'Membuat booking wisata',
+  })
   @Post()
   create(
 
@@ -50,6 +58,9 @@ export class BookingController {
 
   @Roles('ADMIN')
 
+  @ApiOperation({
+    summary: 'Membuat booking wisata',
+  })
   @Get()
   findAll() {
 
@@ -64,6 +75,9 @@ export class BookingController {
 
   @Roles('ADMIN')
 
+  @ApiOperation({
+    summary: 'Membuat booking wisata',
+  })
   @Get(':id')
   findOne(
 
@@ -81,6 +95,9 @@ export class BookingController {
 
   @Roles('ADMIN')
 
+  @ApiOperation({
+    summary: 'Mengubah status booking',
+  })
   @Put(':id/status')
   updateStatus(
 
@@ -103,6 +120,10 @@ export class BookingController {
   )
 
   @Roles('ADMIN')
+
+  @ApiOperation({
+  summary: 'Menghapus booking',
+  })
   @Delete(':id')
   remove(
 
@@ -113,8 +134,29 @@ export class BookingController {
     return this.bookingService.remove(id);
   }
 
-  @Put(':id/payment')
+  @ApiOperation({
+  summary: 'Upload bukti pembayaran',
+})
 
+@ApiConsumes('multipart/form-data')
+
+@ApiBody({
+  schema: {
+    type: 'object',
+    properties: {
+      paymentMethod: {
+        type: 'string',
+        example: 'Transfer Bank',
+      },
+      paymentProof: {
+        type: 'string',
+        format: 'binary',
+      },
+    },
+  },
+})
+
+  @Put(':id/payment')
   @UseInterceptors(
 
   FileInterceptor('paymentProof', {

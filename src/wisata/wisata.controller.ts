@@ -20,7 +20,12 @@ import { extname } from 'path';
 import { JwtAuthGuard } from '../auth/guards/jwt.auth.guard'
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorators';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiConsumes,
+  ApiBody,
+} from '@nestjs/swagger';
 
 @ApiTags('Wisata')
 @Controller('wisata')
@@ -37,6 +42,39 @@ export class WisataController {
 
   @Roles('ADMIN')
 
+  @ApiOperation({
+  summary: 'Menambahkan wisata baru',
+})
+
+@ApiConsumes('multipart/form-data')
+
+@ApiBody({
+  schema: {
+    type: 'object',
+    properties: {
+      name: {
+        type: 'string',
+        example: 'Jatim Park 1',
+      },
+      description: {
+        type: 'string',
+        example: 'Wisata keluarga',
+      },
+      location: {
+        type: 'string',
+        example: 'Kota Batu',
+      },
+      price: {
+        type: 'number',
+        example: 150000,
+      },
+      image: {
+        type: 'string',
+        format: 'binary',
+      },
+    },
+  },
+})
   @Post()
 
   @UseInterceptors(
@@ -86,13 +124,18 @@ create(
     image: file?.filename,
   });
 }
-
+  @ApiOperation({
+    summary: 'Menampilkan semua wisata',
+  })
   @Get()
   findAll() {
 
     return this.wisataService.findAll();
   }
 
+  @ApiOperation({
+    summary: 'Menampilkan detail wisata berdasarkan ID',
+  })
   @Get(':id')
   findOne(
     @Param('id', ParseIntPipe)
@@ -108,6 +151,39 @@ create(
   )
   @Roles('ADMIN')
 
+  @ApiOperation({
+  summary: 'Mengubah data wisata',
+})
+
+@ApiConsumes('multipart/form-data')
+
+@ApiBody({
+  schema: {
+    type: 'object',
+    properties: {
+      name: {
+        type: 'string',
+        example: 'Jatim Park 1',
+      },
+      description: {
+        type: 'string',
+        example: 'Wisata keluarga',
+      },
+      location: {
+        type: 'string',
+        example: 'Kota Batu',
+      },
+      price: {
+        type: 'number',
+        example: 150000,
+      },
+      image: {
+        type: 'string',
+        format: 'binary',
+      },
+    },
+  },
+})
   @Put(':id')
 
   @UseInterceptors(
@@ -169,7 +245,10 @@ update(
     RolesGuard,
   )
   @Roles('ADMIN')
-
+  
+  @ApiOperation({
+  summary: 'Menghapus wisata',
+})
   @Delete(':id')
   remove(
     @Param('id', ParseIntPipe)
