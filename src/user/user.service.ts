@@ -46,11 +46,21 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.user.findUnique({
+  async findOne(id: number) {
+  try {
+    const user = await this.prisma.user.findUnique({
       where: { id },
     });
+
+    return user;
+  } catch (error) {
+    console.error(error);
+
+    return {
+      error: String(error),
+    };
   }
+}
 
   update(
     id: number,

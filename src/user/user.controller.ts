@@ -46,10 +46,7 @@ export class UsersController {
 findOne(
   @Param('id', ParseIntPipe) id: number,
 ) {
-  return {
-    test: 'VERSI BARU',
-    id,
-  };
+  return this.usersService.findOne(id);
 }
   
 
