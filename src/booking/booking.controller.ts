@@ -61,7 +61,7 @@ export class BookingController {
   @Roles('ADMIN')
 
   @ApiOperation({
-    summary: 'Membuat booking wisata',
+    summary: 'menampilkan semua booking',
   })
   @Get()
   findAll() {
@@ -78,7 +78,7 @@ export class BookingController {
   @Roles('ADMIN')
 
   @ApiOperation({
-    summary: 'Membuat booking wisata',
+    summary: 'Menampilkan booking berdasarkan id',
   })
   @Get(':id')
   findOne(
@@ -136,7 +136,7 @@ export class BookingController {
     return this.bookingService.remove(id);
   }
 
-  @ApiOperation({
+@ApiOperation({
   summary: 'Upload bukti pembayaran',
 })
 

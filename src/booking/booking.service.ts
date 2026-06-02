@@ -63,6 +63,7 @@ export class BookingService {
 
         visitDate:
           new Date(dto.visitDate),
+        
       },
 
       include: {
@@ -140,7 +141,6 @@ uploadPayment(
       paymentProof:
         data.paymentProof,
 
-      status: 'SUCCESS',
     },
   });
 }
