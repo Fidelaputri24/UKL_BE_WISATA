@@ -25,9 +25,11 @@ import {
   ApiOperation,
   ApiConsumes,
   ApiBody,
+  ApiBearerAuth
 } from '@nestjs/swagger';
 
 @ApiTags('Wisata')
+@ApiBearerAuth()
 @Controller('wisata')
 export class WisataController {
 
@@ -245,7 +247,7 @@ update(
     RolesGuard,
   )
   @Roles('ADMIN')
-  
+
   @ApiOperation({
   summary: 'Menghapus wisata',
 })

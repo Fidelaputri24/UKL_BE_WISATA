@@ -22,11 +22,13 @@ import { extname }from 'path';
 import {
   ApiTags,
   ApiOperation,
+  ApiBearerAuth,
   ApiConsumes,
   ApiBody,
 } from '@nestjs/swagger';
 
 @ApiTags('Booking')
+@ApiBearerAuth() 
 @Controller('booking')
 export class BookingController {
 
