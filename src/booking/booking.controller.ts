@@ -19,9 +19,10 @@ import { Roles }from '../auth/decorators/roles.decorators';
 import { FileInterceptor }from '@nestjs/platform-express';
 import { diskStorage }from 'multer';
 import { extname }from 'path';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
+@ApiTags('Booking')
 @Controller('booking')
-
 export class BookingController {
 
   constructor(

@@ -20,7 +20,9 @@ import { extname } from 'path';
 import { JwtAuthGuard } from '../auth/guards/jwt.auth.guard'
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorators';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Wisata')
 @Controller('wisata')
 export class WisataController {
 
