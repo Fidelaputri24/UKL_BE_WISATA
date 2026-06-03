@@ -97,9 +97,17 @@ export class BookingController {
 
   @Roles('ADMIN')
 
-  @ApiOperation({
-    summary: 'Mengubah status booking',
-  })
+  @ApiBody({
+  schema: {
+    type: 'object',
+    properties: {
+      status: {
+        type: 'string',
+        example: 'SUCCESS',
+      },
+    },
+  },
+})
   @Put(':id/status')
   updateStatus(
 
@@ -157,7 +165,6 @@ export class BookingController {
     },
   },
 })
-
   @Put(':id/payment')
   @UseInterceptors(
 
